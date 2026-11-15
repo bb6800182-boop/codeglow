@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 設計 token：取自專案根目錄 DESIGN.md；改顏色先改 DESIGN.md 再同步這裡 -->
+<resources>
+    <color name="primary">#1F2937</color>
+    <color name="secondary">#4B5563</color>
+    <color name="accent">#2563EB</color>
+    <color name="on_accent">#FFFFFF</color>
+    <color name="neutral">#F9FAFB</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="border">#E5E7EB</color>
+    <color name="error">#DC2626</color>
+    <!-- 條碼一律純黑條純白底，不跟主題變 -->
+    <color name="barcode_ink">#000000</color>
+    <color name="barcode_paper">#FFFFFF</color>
+    <!-- 沒選圖片的店家圖示底色（白字都過 AA） -->
+    <color name="icon_1">#3E5C76</color>
+    <color name="icon_2">#4F6B58</color>
+    <color name="icon_3">#8B5A3C</color>
+    <color name="icon_4">#6B4E71</color>
+    <color name="icon_5">#2F6B6B</color>
+    <color name="icon_6">#7A5C1E</color>
+</resources>

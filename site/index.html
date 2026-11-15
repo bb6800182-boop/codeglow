@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>碼上亮｜結帳時點一下，條碼就亮出來</title>
+<meta name="description" content="放發票載具和會員卡條碼的 Android App：桌面小工具點一下，條碼就顯示並自動調到最亮，掃完恢復原本的亮度。不連網、沒有廣告，免費、開源。">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content="碼上亮｜結帳時點一下，條碼就亮出來">
+<meta property="og:description" content="發票載具和會員卡放在桌面，點一下就亮出來給店員掃。">
+<meta property="og:url" content="https://c520.pages.dev/mashangliang/">
+<meta property="og:image" content="https://c520.pages.dev/mashangliang/icon-512.png">
+<link rel="canonical" href="https://c520.pages.dev/mashangliang/">
+<meta name="theme-color" content="#F9FAFB">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+/* 顏色、字級、間距、圓角都取自 App 的 DESIGN.md（C520 網站一律亮色，不跟著系統變深色） */
+:root {
+  color-scheme: light;
+  --primary: #1F2937;
+  --on-primary: #FFFFFF;
+  --accent: #2563EB;
+  --on-accent: #FFFFFF;
+  --accent-text: #1D4ED8;
+  --canvas: #F9FAFB;
+  --surface-1: #FFFFFF;
+  --surface-2: #F3F4F6;
+  --hairline: #E5E7EB;
+  --hairline-strong: #D1D5DB;
+  --ink: #1F2937;
+  --ink-muted: #374151;
+  --ink-subtle: #4B5563;
+  --success: #15803D;
+  --font: Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --s-xs: 8px;
+  --s-sm: 12px;
+  --s-md: 16px;
+  --s-lg: 20px;
+  --s-xl: 24px;
+  --s-xxl: 32px;
+  font: 400 15px/1.6 var(--font);
+  background: var(--canvas);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+h1, h2, h3, p, ol, ul { margin: 0; }
+a { color: var(--accent-text); text-underline-offset: 4px; }
+a:focus-visible, summary:focus-visible, .btn:focus-visible { outline: 3px solid var(--accent-text); outline-offset: 3px; }
+.wrap { max-width: 960px; margin-inline: auto; padding-inline: var(--s-md); }
+.skip { position: absolute; left: 10px; top: 10px; z-index: 9; padding: 10px 16px; border-radius: 999px; background: var(--primary); color: var(--on-primary); transform: translateY(-200%); }
+.skip:focus { transform: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ic { width: 22px; height: 22px; flex-shrink: 0; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* 頁首：回 C520 首頁、App 名稱、下載 */
+.top { display: flex; align-items: center; gap: var(--s-md); min-height: 64px; border-bottom: 1px solid var(--hairline); }
+.home { display: inline-flex; align-items: center; min-height: 44px; padding-right: var(--s-md); border-right: 1px solid var(--hairline-strong); font: 500 17px/1 Georgia, serif; font-variant-numeric: lining-nums; color: var(--ink-subtle); text-decoration: none; }
+.home:hover { color: var(--ink); }
+.brand { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; font-weight: 600; }
+.brand img { width: 32px; height: 32px; border-radius: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border: 1px solid var(--primary); border-radius: 999px; background: var(--primary); color: var(--on-primary); font: 500 15px/1.2 var(--font); text-decoration: none; white-space: nowrap; }
+.btn:hover { background: #374151; border-color: #374151; }
+.btn.ghost { background: var(--surface-1); color: var(--ink); border-color: var(--hairline-strong); }
+.btn.ghost:hover { background: var(--surface-2); }
+.top .btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
+
+/* 開場 */
+.hero { display: grid; grid-template-columns: auto 1fr; gap: var(--s-xxl); align-items: center; padding-block: 48px 40px; }
+.hero > img { width: 160px; height: 160px; border-radius: 36px; }
+.eyebrow { color: var(--accent-text); font-size: 13px; font-weight: 600; letter-spacing: .5px; }
+h1 { margin-top: 6px; font-size: 40px; line-height: 1.2; font-weight: 700; letter-spacing: .5px; }
+.lead { margin-top: var(--s-sm); font-size: 20px; line-height: 1.5; color: var(--ink-muted); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-sm); margin-top: var(--s-xl); }
+.meta { margin-top: var(--s-sm); color: var(--ink-subtle); font-size: 13px; }
+
+/* 區塊 */
+section { padding-block: 36px; border-top: 1px solid var(--hairline); }
+h2 { font-size: 26px; line-height: 1.3; font-weight: 700; }
+.sub { margin-top: 6px; color: var(--ink-subtle); }
+.story { margin-top: var(--s-lg); padding: var(--s-xl); border-radius: var(--r-lg); background: var(--surface-1); border: 1px solid var(--hairline); font-size: 17px; line-height: 1.8; }
+.story p + p { margin-top: var(--s-sm); }
+.story strong { color: var(--ink); }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--s-sm); margin-top: var(--s-lg); }
+.card { padding: var(--s-lg); border-radius: var(--r-lg); background: var(--surface-1); border: 1px solid var(--hairline); }
+.card .ic { color: var(--accent-text); }
+.card h3 { margin-top: 10px; font-size: 17px; line-height: 1.4; }
+.card p { margin-top: 4px; color: var(--ink-subtle); font-size: 14px; }
+.says { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; padding: 0; list-style: none; }
+.says li { padding: 4px 12px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--hairline); color: var(--ink-muted); font-size: 14px; }
+
+/* 情境示意 */
+.flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-sm); margin-top: var(--s-lg); padding: 0; list-style: none; counter-reset: f; }
+.flow li { position: relative; padding: var(--s-lg); border-radius: var(--r-lg); background: var(--surface-1); border: 1px solid var(--hairline); }
+.flow b { display: block; color: var(--accent-text); font-size: 13px; }
+.flow span { display: block; margin-top: 6px; font-size: 16px; }
+
+/* 安裝步驟 */
+.steps { margin-top: var(--s-lg); padding: 0; list-style: none; counter-reset: s; display: grid; gap: var(--s-sm); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 36px 1fr; gap: var(--s-sm); padding: var(--s-md) var(--s-lg); border-radius: var(--r-lg); background: var(--surface-1); border: 1px solid var(--hairline); }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.steps b { display: block; }
+.steps span { display: block; color: var(--ink-subtle); font-size: 14px; }
+
+/* 常見問題 */
+details { margin-top: var(--s-sm); border-radius: var(--r-md); background: var(--surface-1); border: 1px solid var(--hairline); }
+summary { display: flex; align-items: center; justify-content: space-between; gap: var(--s-sm); min-height: 52px; padding: 0 var(--s-lg); cursor: pointer; font-weight: 600; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary .ic { transition: transform .15s; color: var(--ink-subtle); }
+details[open] summary .ic { transform: rotate(180deg); }
+.faq-a { padding: 0 var(--s-lg) var(--s-lg); color: var(--ink-muted); }
+.faq-a p + p { margin-top: 8px; }
+
+.foot { padding-block: var(--s-xxl); border-top: 1px solid var(--hairline); color: var(--ink-subtle); font-size: 13px; }
+.foot p + p { margin-top: 8px; }
+
+@media (max-width: 720px) {
+  .hero { grid-template-columns: 1fr; gap: var(--s-lg); padding-block: 32px; }
+  .hero > img { width: 96px; height: 96px; border-radius: 22px; }
+  h1 { font-size: 34px; }
+  .lead { font-size: 18px; }
+  .flow { grid-template-columns: 1fr; }
+  .story { padding: var(--s-lg); font-size: 16px; }
+}
+@media (max-width: 400px) {
+  .brand span { display: none; }
+  .actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主要內容</a>
+<svg class="defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="m8 7-5 5 5 5m8-10 5 5-5 5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2m0 15v2M2.5 12h2m15 0h2M5.3 5.3l1.4 1.4m10.6 10.6 1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+  <symbol id="i-widget" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></symbol>
+  <symbol id="i-barcode" viewBox="0 0 24 24"><path d="M4 6v12M7.5 6v12M10.5 6v12M14 6v12M17 6v12M20 6v12"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 10v10h16V10"/><path d="M3 10l2-6h14l2 6a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-touch" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="6"/><circle cx="15" cy="12" r="3.5"/></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v8"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 20.5h4"/></symbol>
+</svg>
+<header class="wrap top">
+  <a class="home" href="/" aria-label="回 C520 首頁">C520</a>
+  <div class="brand"><img src="icon.svg" alt="" width="32" height="32"><span>碼上亮</span></div>
+  <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.2.1.apk">下載</a>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <div class="hero">
+    <img src="icon-512.png" alt="碼上亮的圖示：藍底上的白色條碼" width="160" height="160">
+    <div>
+      <p class="eyebrow">發票載具、會員卡條碼的 Android App</p>
+      <h1>碼上亮</h1>
+      <p class="lead">結帳時不用再翻 App 找條碼。<br>桌面點一下，條碼就亮出來給店員掃。</p>
+      <div class="actions">
+        <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.2.1.apk"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>下載 APK</a>
+        <a class="btn ghost" href="https://github.com/bb6800182-boop/mashangliang" target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg>原始碼<span class="sr-only">（GitHub，另開分頁）</span></a>
+      </div>
+      <p class="meta">v0.2.1・約 2.5 MB・Android 12 以上<br>免費、MIT 開源・不連網、沒有廣告</p>
+    </div>
+  </div>
+
+  <section aria-labelledby="why">
+    <h2 id="why">為什麼做這個 App</h2>
+    <div class="story">
+      <p>結帳時先開發票 App 找載具，再開店家的 App 找會員卡，後面還有人在排隊。好不容易找到了，螢幕太暗，掃了幾次才過。</p>
+      <p><strong>我只是要把條碼亮出來而已。</strong>所以碼上亮把條碼直接放在手機桌面：點一下就出現、自動調到最亮，掃完再點一下，亮度就恢復原狀。</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="widgets">
+    <h2 id="widgets">三種桌面小工具</h2>
+    <p class="sub">長按桌面空白處 →「小工具」→「碼上亮」，挑適合自己桌面的放。</p>
+    <div class="grid">
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-barcode"/></svg><h3>單一條碼</h3><p>條碼直接顯示在桌面，小工具拉多寬它就多寬。旁邊的太陽鈕點一下調到最亮，再點一下恢復。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-widget"/></svg><h3>多個店家</h3><p>所有店家的圖示排成一排。點哪一家，就只留那張條碼並調到最亮；點條碼收回去。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-store"/></svg><h3>單一圖示</h3><p>平常只是一個店家圖示，不佔桌面。點一下變成條碼，再點一下變回圖示。</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="feat">
+    <h2 id="feat">簡單，但該有的都有</h2>
+    <div class="grid">
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-receipt"/></svg><h3>發票載具</h3><p>手機條碼（「/」開頭共 8 碼），小寫會自動轉成大寫，格式不對會提醒。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-store"/></svg><h3>會員卡</h3><p>支援 Code 128、EAN-13、EAN-8、UPC-A、Code 39、ITF、Codabar 和 QR Code；打完號碼會自動判斷格式，也可以自己選。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg><h3>自動調到最亮</h3><p>亮出條碼時螢幕調到最亮，收起來就恢復原本的亮度和自動調整。在 App 裡點條碼會全螢幕顯示，而且不會自動關螢幕。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-widget"/></svg><h3>店家圖示</h3><p>每張條碼可以選一張圖片當圖示；沒選就用名稱的第一個字。</p></div>
+      <div class="card"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><h3>資料只在手機裡</h3><p>App 沒有網路權限，條碼只存在這支手機，不會上傳，也沒有廣告和使用統計。</p></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="install">
+    <h2 id="install">安裝與設定</h2>
+    <ol class="steps">
+      <li><div><b>下載並安裝 APK</b><span>沒有上架 Google Play。用手機開這一頁，點「下載 APK」，安裝時允許瀏覽器安裝未知的應用程式。</span></div></li>
+      <li><div><b>新增條碼</b><span>打開碼上亮，按「＋ 新增」，選發票載具或會員卡，輸入名稱和號碼；下面會馬上看到條碼的樣子。</span></div></li>
+      <li><div><b>允許「修改系統設定」</b><span>桌面小工具要靠這個權限把螢幕調亮。App 首頁有提示，按「前往允許」打開就好；不給的話條碼照樣會顯示，只是不會變亮。</span></div></li>
+      <li><div><b>把小工具放到桌面</b><span>長按桌面空白處 →「小工具」→「碼上亮」，選一種拖到桌面，再選要顯示哪張條碼。</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="faq">
+    <h2 id="faq">常見問題</h2>
+    <details id="faq-perm">
+      <summary>為什麼要「修改系統設定」的權限？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>桌面小工具沒有自己的視窗，要讓螢幕變亮只能改系統的亮度，Android 規定這要使用者自己打開「修改系統設定」。碼上亮只用它來調亮度和恢復亮度。</p><p>在 App 裡點條碼全螢幕顯示時不需要這個權限。</p></div>
+    </details>
+    <details id="faq-scan">
+      <summary>店員掃不到怎麼辦？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>先確認螢幕已經最亮（單一條碼小工具點太陽鈕）。小工具太窄時條碼的線會很細，把小工具拉寬一點，或是打開 App 點那張條碼全螢幕顯示。</p><p>還是掃不到，可能是條碼格式和店家的不一樣：到「編輯」換一種格式試試。</p></div>
+    </details>
+    <details id="faq-data">
+      <summary>我的條碼存在哪裡？換手機怎麼辦？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>只存在這支手機裡，App 沒有網路權限，也不會跟著系統備份。</p><p>所以換手機或移除 App 之後，條碼要重新輸入一次。</p></div>
+    </details>
+    <details id="faq-phone">
+      <summary>支援哪些手機？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>Android 12 以上。在 Pixel 7 Pro 上開發與測試；桌面小工具的大小和長按選單，每個品牌的桌面會有些不同。</p></div>
+    </details>
+    <details id="faq-install">
+      <summary>安裝時跳出警告？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>因為不是從 Google Play 安裝，Android 會請你允許瀏覽器「安裝未知的應用程式」，Play 安全防護也可能多問一次。App 的原始碼是公開的，可以自己檢查。</p></div>
+    </details>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>隱私：不連網、不收集任何資料；條碼只存在你的手機。</p>
+  <p>條碼的產生使用 <a href="https://github.com/zxing/zxing" target="_blank" rel="noopener noreferrer">ZXing</a>（Apache License 2.0）。</p>
+  <p>原始碼：<a href="https://github.com/bb6800182-boop/mashangliang" target="_blank" rel="noopener noreferrer">GitHub</a>（MIT 授權）・聯絡：<a href="mailto:bb6800182@gmail.com">bb6800182@gmail.com</a></p>
+  <p><a href="/">更多作品</a></p>
+  <p>© 2026 C520</p>
+</footer>
+<script>
+// 連到某一題（例如 #faq-data）時自動展開那一題
+const openQ = id => { const d = document.getElementById(id); if (d && d.tagName === 'DETAILS') d.open = true; };
+document.querySelectorAll('a[href^="#faq-"]').forEach(a => a.addEventListener('click', () => openQ(a.hash.slice(1))));
+openQ(decodeURIComponent(location.hash.slice(1)));
+</script>
+</body>
+</html>

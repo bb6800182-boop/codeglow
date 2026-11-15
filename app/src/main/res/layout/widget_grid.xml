@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 多店家小工具（收起時）：店家圖示一覽，每格的內容由 GridService 提供 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg">
+
+    <GridView
+        android:id="@+id/grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:columnWidth="@dimen/grid_cell"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/space_xs"
+        android:numColumns="auto_fit"
+        android:padding="@dimen/space_sm"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="@dimen/space_xs" />
+
+    <TextView
+        android:id="@+id/grid_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="還沒有條碼，點這裡新增"
+        android:textColor="@color/secondary"
+        android:textSize="@dimen/text_body_sm"
+        android:visibility="gone" />
+</FrameLayout>

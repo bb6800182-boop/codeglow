@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- App 圖示：accent 底上的白色條碼（只用白色一色，兼主題圖示） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="@color/on_accent"
+        android:pathData="M33,37h4v34h-4zM39,37h2v34h-2zM43,37h2v34h-2zM47,37h5v34h-5zM54,37h2v34h-2zM58,37h4v34h-4zM64,37h2v34h-2zM68,37h2v34h-2zM72,37h3v34h-3z" />
+</vector>

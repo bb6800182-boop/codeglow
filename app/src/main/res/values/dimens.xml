@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 設計 token：取自專案根目錄 DESIGN.md（spacing、rounded、typography）；改了先改 DESIGN.md 再同步這裡 -->
+<resources>
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">16dp</dimen>
+    <dimen name="space_lg">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+
+    <dimen name="radius_md">8dp</dimen>
+    <dimen name="radius_lg">12dp</dimen>
+
+    <dimen name="text_h3">24sp</dimen>
+    <dimen name="text_body">16sp</dimen>
+    <dimen name="text_body_sm">14sp</dimen>
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_micro">10sp</dimen>
+    <dimen name="text_mono">20sp</dimen>
+    <item name="mono_tracking" format="float" type="dimen">0.06</item>
+
+    <!-- 元件尺寸（DESIGN.md Layout） -->
+    <dimen name="hairline">1dp</dimen>
+    <dimen name="touch">48dp</dimen>
+    <dimen name="touch_sm">32dp</dimen>
+    <dimen name="icon">48dp</dimen>
+    <dimen name="grid_cell">72dp</dimen>
+    <dimen name="input_pad_v">12dp</dimen>
+    <dimen name="preview_h">96dp</dimen>
+</resources>

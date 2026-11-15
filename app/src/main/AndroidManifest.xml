@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 小工具把螢幕調到最亮要改系統亮度：這是特殊權限，使用者要在「修改系統設定」手動允許 -->
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <!-- 不加 INTERNET：條碼只存在這支手機，也不備份 -->
+
+    <application
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 旋轉時不重建，選到一半的圖片和輸入不會不見 -->
+        <activity
+            android:name=".EditActivity"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ShowActivity"
+            android:exported="false"
+            android:theme="@style/ShowTheme" />
+
+        <!-- 單一條碼／單一圖示小工具放上桌面時，由啟動器（別的 App）打開來選條碼，所以要 exported；畫面會確認小工具 ID 屬於本 App -->
+        <!-- 從小工具的「選擇條碼」點進來時也自成一個工作，選完回桌面，不會跳回 App -->
+        <activity
+            android:name=".PickActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:taskAffinity="">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <!-- 小工具：系統（AppWidgetService）要送更新，所以 exported；要求寄送者持有 BIND_APPWIDGET，只有系統有 -->
+        <receiver
+            android:name=".SingleWidget"
+            android:exported="true"
+            android:label="@string/widget_single"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_single_info" />
+        </receiver>
+
+        <receiver
+            android:name=".GridWidget"
+            android:exported="true"
+            android:label="@string/widget_grid"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_grid_info" />
+        </receiver>
+
+        <receiver
+            android:name=".IconWidget"
+            android:exported="true"
+            android:label="@string/widget_icon"
+            android:permission="android.permission.BIND_APPWIDGET">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_icon_info" />
+        </receiver>
+
+        <!-- 小工具上的點擊：只收自己發的 PendingIntent -->
+        <receiver
+            android:name=".TapReceiver"
+            android:exported="false" />
+
+        <!-- 多店家小工具的圖示清單；由系統代替桌面來綁定 -->
+        <service
+            android:name=".GridService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+    </application>
+</manifest>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小工具挑選畫面的預覽圖：真的 Code 39「/ABC1234」（含左右靜區） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="149dp"
+    android:height="40dp"
+    android:viewportWidth="149"
+    android:viewportHeight="40">
+    <path
+        android:fillColor="@color/barcode_ink"
+        android:pathData="M10,0h1v40h-1zM13,0h1v40h-1zM15,0h2v40h-2zM18,0h2v40h-2zM21,0h1v40h-1zM23,0h1v40h-1zM26,0h1v40h-1zM29,0h1v40h-1zM31,0h1v40h-1zM34,0h1v40h-1zM36,0h2v40h-2zM39,0h1v40h-1zM41,0h1v40h-1zM44,0h1v40h-1zM46,0h2v40h-2zM49,0h1v40h-1zM51,0h2v40h-2zM54,0h1v40h-1zM57,0h1v40h-1zM59,0h2v40h-2zM62,0h2v40h-2zM65,0h2v40h-2zM68,0h1v40h-1zM71,0h1v40h-1zM73,0h1v40h-1zM75,0h2v40h-2zM78,0h1v40h-1zM81,0h1v40h-1zM83,0h1v40h-1zM85,0h2v40h-2zM88,0h1v40h-1zM90,0h2v40h-2zM94,0h1v40h-1zM96,0h1v40h-1zM98,0h2v40h-2zM101,0h2v40h-2zM104,0h2v40h-2zM108,0h1v40h-1zM110,0h1v40h-1zM112,0h1v40h-1zM114,0h1v40h-1zM116,0h1v40h-1zM119,0h2v40h-2zM122,0h1v40h-1zM124,0h2v40h-2zM127,0h1v40h-1zM130,0h1v40h-1zM132,0h2v40h-2zM135,0h2v40h-2zM138,0h1v40h-1z" />
+</vector>

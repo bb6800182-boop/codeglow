@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小工具挑選畫面的預覽（Android 12 起），內容是範例；版面同 widget_icon.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="@dimen/icon"
+        android:layout_height="@dimen/icon"
+        android:layout_gravity="center"
+        android:background="@drawable/preview_icon"
+        android:backgroundTint="@color/icon_1"
+        android:gravity="center"
+        android:text="超"
+        android:textColor="@color/on_accent"
+        android:textSize="@dimen/text_h3"
+        android:textStyle="bold" />
+</FrameLayout>

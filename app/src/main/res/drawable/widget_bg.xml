@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小工具底（DESIGN.md components.widget）：surface＋border 細框，圓角 rounded.lg -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/surface" />
+    <stroke
+        android:width="@dimen/hairline"
+        android:color="@color/border" />
+    <corners android:radius="@dimen/radius_lg" />
+</shape>

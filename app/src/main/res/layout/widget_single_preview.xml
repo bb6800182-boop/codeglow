@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 小工具挑選畫面的預覽（Android 12 起），內容是範例；版面同 widget_single.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/hairline">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_sm"
+        android:layout_weight="1"
+        android:importantForAccessibility="no"
+        android:scaleType="fitXY"
+        android:src="@drawable/preview_barcode" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="@dimen/touch"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="發票載具"
+                android:textColor="@color/secondary"
+                android:textSize="@dimen/text_micro" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_sm"
+                android:fontFamily="monospace"
+                android:text="/ABC1234"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/text_caption" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/touch"
+            android:layout_height="@dimen/touch_sm"
+            android:layout_gravity="end|center_vertical"
+            android:importantForAccessibility="no"
+            android:scaleType="center"
+            android:src="@drawable/ic_sun" />
+    </FrameLayout>
+</LinearLayout>

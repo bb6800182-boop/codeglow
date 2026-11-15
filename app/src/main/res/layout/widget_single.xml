@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 單一條碼小工具；多店家小工具打開一張時也換成這個版面。
+     條碼撐滿整個小工具，只讓出 1dp 細框；左右的白邊是條碼自己的靜區（掃描器要的空白）。
+     一維條碼放 code_img（fitXY 撐滿），QR Code 放 code_qr（等比）；圖由 Widgets.fill() 畫好放進來。
+     下面一行是「名稱（小字）　號碼」，右邊的太陽（code_sun）只有單一條碼小工具顯示。 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:padding="@dimen/hairline">
+
+    <LinearLayout
+        android:id="@+id/code"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/code_img"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_sm"
+            android:layout_weight="1"
+            android:importantForAccessibility="no"
+            android:scaleType="fitXY" />
+
+        <ImageView
+            android:id="@+id/code_qr"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_sm"
+            android:layout_weight="1"
+            android:importantForAccessibility="no"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <!-- 名稱＋號碼置中，左右各讓出太陽鈕的寬度；太長的號碼用 … 截斷 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="@dimen/touch"
+                android:layout_marginVertical="@dimen/space_xs"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/code_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxEms="8"
+                    android:maxLines="1"
+                    android:textColor="@color/secondary"
+                    android:textSize="@dimen/text_micro" />
+
+                <TextView
+                    android:id="@+id/code_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_sm"
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:maxLines="1"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/text_caption" />
+            </LinearLayout>
+
+            <!-- 調亮鈕：點了調到最亮，調亮中換成實心藍色。觸控範圍 48×32dp（WCAG 2.2 AA 下限 24dp），
+                 不用 48dp 高，下面那行才不會吃掉條碼的高度 -->
+            <ImageView
+                android:id="@+id/code_sun"
+                android:layout_width="@dimen/touch"
+                android:layout_height="@dimen/touch_sm"
+                android:layout_gravity="end|center_vertical"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:contentDescription="調到最亮"
+                android:scaleType="center"
+                android:src="@drawable/ic_sun"
+                android:visibility="gone" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- 還沒選條碼、或那張被刪了 -->
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="點這裡選擇要顯示的條碼"
+        android:textColor="@color/secondary"
+        android:textSize="@dimen/text_body_sm" />
+</FrameLayout>

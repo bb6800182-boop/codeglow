@@ -1,0 +1,13 @@
+# 版本跟車機調暗、聲得我心一致。AGP 9 內建 Kotlin；不用 AndroidX。
+# 唯一的第三方套件是產生條碼的 ZXing core（純 Java、沒有其他相依）：Code 128／EAN／QR 的編碼器自己寫容易出錯，掃不到就白做。
+[versions]
+agp = "9.0.1"
+zxing = "3.5.4"
+junit = "4.13.2"
+
+[libraries]
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxing" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }

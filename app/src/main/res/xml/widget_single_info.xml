@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 單一條碼：預設 4×1，放上桌面時開 PickActivity 選條碼；Android 12 起長按可以重新選。
+     內容只在條碼改了或被點的時候更新，不需要定時更新。 -->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.c520.barcode.PickActivity"
+    android:description="@string/widget_single_desc"
+    android:initialLayout="@layout/widget_single"
+    android:minWidth="250dp"
+    android:minHeight="40dp"
+    android:minResizeWidth="110dp"
+    android:minResizeHeight="40dp"
+    android:previewLayout="@layout/widget_single_preview"
+    android:resizeMode="horizontal|vertical"
+    android:targetCellWidth="4"
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="0"
+    android:widgetCategory="home_screen"
+    android:widgetFeatures="reconfigurable" />

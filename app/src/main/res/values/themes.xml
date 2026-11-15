@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 亮色、無標題列；畫面用程式碼組（Ui.kt） -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/neutral</item>
+        <item name="android:colorBackground">@color/neutral</item>
+        <item name="android:colorAccent">@color/accent</item>
+        <item name="android:colorPrimary">@color/accent</item>
+        <item name="android:colorControlActivated">@color/accent</item>
+        <item name="android:textColorPrimary">@color/primary</item>
+        <item name="android:textColorSecondary">@color/secondary</item>
+        <item name="android:textColorHint">@color/secondary</item>
+        <item name="android:statusBarColor">@color/neutral</item>
+        <item name="android:navigationBarColor">@color/neutral</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:alertDialogTheme">@style/DialogTheme</item>
+    </style>
+
+    <!-- 全螢幕條碼：白底（最亮由 ShowActivity 設定） -->
+    <style name="ShowTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/barcode_paper</item>
+        <item name="android:statusBarColor">@color/barcode_paper</item>
+        <item name="android:navigationBarColor">@color/barcode_paper</item>
+    </style>
+
+    <style name="DialogTheme" parent="android:Theme.Material.Light.Dialog.Alert">
+        <item name="android:colorAccent">@color/accent</item>
+    </style>
+</resources>
