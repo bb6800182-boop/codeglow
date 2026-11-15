@@ -97,7 +97,7 @@ class GridService : RemoteViewsService() {
             val card = cards.getOrNull(position) ?: return v
             v.setImageViewBitmap(R.id.item_icon, Icons.of(c, card))
             v.setTextViewText(R.id.item_name, card.name)
-            v.setContentDescription(R.id.item, "${card.name}，點一下顯示條碼")
+            v.setContentDescription(R.id.item, L.t("${card.name}，點一下顯示條碼", "${card.name}. Tap to show the barcode"))
             v.setOnClickFillInIntent(R.id.item, Intent().putExtra(Widgets.EXTRA_CARD, card.id))
             return v
         }
@@ -177,7 +177,7 @@ object Widgets {
                 return
             }
             val v = RemoteViews(c.packageName, R.layout.widget_single)
-            fill(c, m, id, v, card, sun = false, "點一下恢復亮度，收回成圖示")
+            fill(c, m, id, v, card, sun = false, L.t("點一下恢復亮度，收回成圖示", "Tap to restore brightness and go back to the icon"))
             v.setOnClickPendingIntent(R.id.root, tap(c, TAP_CODE, id))
             m.updateAppWidget(id, v)
             return
@@ -191,7 +191,7 @@ object Widgets {
             v.setOnClickPendingIntent(R.id.icon_empty, PendingIntent.getActivity(c, id, PickActivity.intent(c, id), IMMUTABLE))
         } else {
             v.setImageViewBitmap(slot, Icons.of(c, card))
-            v.setContentDescription(slot, "${card.name}，點一下顯示條碼並調到最亮")
+            v.setContentDescription(slot, L.t("${card.name}，點一下顯示條碼並調到最亮", "${card.name}. Tap to show the barcode at full brightness"))
             v.setOnClickPendingIntent(slot, tap(c, TAP_ICON, id, card = card.id))
         }
         m.updateAppWidget(id, v)
@@ -214,9 +214,9 @@ object Widgets {
             v.setContentDescription(R.id.root, null)
             v.setOnClickPendingIntent(R.id.root, PendingIntent.getActivity(c, id, PickActivity.intent(c, id), IMMUTABLE))
         } else {
-            fill(c, m, id, v, card, sun = true, if (bright) "已調到最亮，點條碼恢復亮度" else "點右下的太陽調到最亮")
+            fill(c, m, id, v, card, sun = true, if (bright) L.t("已調到最亮，點條碼恢復亮度", "At full brightness. Tap the barcode to restore") else L.t("點右下的太陽調到最亮", "Tap the sun at the lower right for full brightness"))
             v.setImageViewResource(R.id.code_sun, if (bright) R.drawable.ic_sun_on else R.drawable.ic_sun)
-            v.setContentDescription(R.id.code_sun, if (bright) "恢復亮度" else "調到最亮")
+            v.setContentDescription(R.id.code_sun, if (bright) L.t("恢復亮度", "Restore brightness") else L.t("調到最亮", "Full brightness"))
             v.setOnClickPendingIntent(R.id.code_sun, tap(c, TAP_SUN, id))
             // 平常點條碼不做事（免得誤觸調亮）；調亮中點條碼恢復
             v.setOnClickPendingIntent(R.id.root, if (bright) tap(c, TAP_CODE, id) else null)
@@ -234,7 +234,7 @@ object Widgets {
         if (card != null) {
             // 打開一張：換成單一條碼的版面，其他圖示都不顯示；點條碼恢復亮度、收回
             val v = RemoteViews(c.packageName, R.layout.widget_single)
-            fill(c, m, id, v, card, sun = false, "點一下恢復亮度，回到店家一覽")
+            fill(c, m, id, v, card, sun = false, L.t("點一下恢復亮度，回到店家一覽", "Tap to restore brightness and go back to the stores"))
             v.setOnClickPendingIntent(R.id.root, tap(c, TAP_CODE, id))
             m.updateAppWidget(id, v)
             return
@@ -318,7 +318,7 @@ object Widgets {
         }
         v.setViewVisibility(R.id.code_img, if (img == R.id.code_img) View.VISIBLE else View.GONE)
         v.setViewVisibility(R.id.code_qr, if (img == R.id.code_qr) View.VISIBLE else View.GONE)
-        v.setContentDescription(R.id.root, "${card.name} 條碼，號碼 ${card.value}。$hint")
+        v.setContentDescription(R.id.root, L.t("${card.name} 條碼，號碼 ${card.value}。$hint", "${card.name} barcode, number ${card.value}. $hint"))
     }
 
     /**

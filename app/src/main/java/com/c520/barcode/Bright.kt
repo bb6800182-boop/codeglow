@@ -75,7 +75,7 @@ object Bright {
         try {
             a.startActivity(Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + a.packageName)))
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(a, "找不到設定頁，請到 設定 > 應用程式 > 碼上亮 > 修改系統設定", Toast.LENGTH_LONG).show()
+            Toast.makeText(a, L.t("找不到設定頁，請到 設定 > 應用程式 > 碼上亮 > 修改系統設定", "Can't open the settings page. Go to Settings > Apps > CodeGlow > Modify system settings"), Toast.LENGTH_LONG).show()
         }
     }
 }

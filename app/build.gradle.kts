@@ -13,8 +13,8 @@ android {
         // Android 12 起：小工具可重新設定、PendingIntent 可變旗標、ImageDecoder 都有，程式不用寫舊版分支
         minSdk = 31
         targetSdk = 36
-        versionCode = 6
-        versionName = "0.2.1"
+        versionCode = 7
+        versionName = "0.3.0"
     }
 
     // 簽章放在專案資料夾旁邊的 barcode-widget-signing（不進版控；用 Dropbox 同步，每台電腦都用同一份）：

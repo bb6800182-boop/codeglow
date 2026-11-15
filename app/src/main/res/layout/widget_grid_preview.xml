@@ -20,7 +20,7 @@
             android:background="@drawable/preview_icon"
             android:backgroundTint="@color/icon_1"
             android:gravity="center"
-            android:text="超"
+            android:text="@string/pv_a"
             android:textColor="@color/on_accent"
             android:textSize="@dimen/text_h3"
             android:textStyle="bold" />
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_xs"
-            android:text="超市"
+            android:text="@string/pv_a_name"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_caption" />
     </LinearLayout>
@@ -46,7 +46,7 @@
             android:background="@drawable/preview_icon"
             android:backgroundTint="@color/icon_3"
             android:gravity="center"
-            android:text="賣"
+            android:text="@string/pv_b"
             android:textColor="@color/on_accent"
             android:textSize="@dimen/text_h3"
             android:textStyle="bold" />
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_xs"
-            android:text="賣場"
+            android:text="@string/pv_b_name"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_caption" />
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:background="@drawable/preview_icon"
             android:backgroundTint="@color/icon_5"
             android:gravity="center"
-            android:text="載"
+            android:text="@string/pv_c"
             android:textColor="@color/on_accent"
             android:textSize="@dimen/text_h3"
             android:textStyle="bold" />
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_xs"
-            android:text="發票載具"
+            android:text="@string/pv_c_name"
             android:textColor="@color/primary"
             android:textSize="@dimen/text_caption" />
     </LinearLayout>

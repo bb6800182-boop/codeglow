@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">碼上亮</string>
-    <string name="widget_single">單一條碼</string>
-    <string name="widget_single_desc">直接顯示一張條碼；點太陽調到最亮，點條碼恢復</string>
-    <string name="widget_grid">多個店家</string>
-    <string name="widget_grid_desc">店家圖示一覽；點圖示顯示條碼並調到最亮，點條碼恢復亮度、收回</string>
-    <string name="widget_icon">單一圖示</string>
-    <string name="widget_icon_desc">平常只有一個店家圖示（背景透明）；點圖示變白底顯示條碼並調到最亮，再點一下恢復</string>
-    <string name="need_permission">要先在「碼上亮」允許「修改系統設定」，小工具才能把螢幕調亮</string>
+    <string name="app_name">CodeGlow</string>
+    <string name="widget_single">Single barcode</string>
+    <string name="widget_single_desc">Shows one barcode. Tap the sun for full brightness, tap the barcode to restore.</string>
+    <string name="widget_grid">Several stores</string>
+    <string name="widget_grid_desc">A row of store icons. Tap an icon to show its barcode at full brightness; tap the barcode to go back.</string>
+    <string name="widget_icon">Single icon</string>
+    <string name="widget_icon_desc">Just one store icon on a clear background. Tap it to show the barcode at full brightness; tap again to restore.</string>
+    <string name="need_permission">Allow \"Modify system settings\" in CodeGlow first, so widgets can brighten the screen</string>
+    <string name="widget_empty">No barcodes yet. Tap to add one</string>
+    <string name="widget_pick">Choose a barcode</string>
+    <string name="widget_pick_single">Tap to choose a barcode</string>
+    <string name="brighten">Full brightness</string>
+    <string name="pv_a">S</string>
+    <string name="pv_a_name">Store</string>
+    <string name="pv_b">M</string>
+    <string name="pv_b_name">Market</string>
+    <string name="pv_c">C</string>
+    <string name="pv_c_name">Card</string>
 </resources>

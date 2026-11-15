@@ -72,14 +72,14 @@ object Barcode {
 
     /** 每種格式能用什麼字；號碼不合時顯示給使用者。 */
     fun rule(format: BarcodeFormat): String = when (format) {
-        BarcodeFormat.EAN_13 -> "EAN-13 要 12 或 13 位數字（最後一位是檢查碼）"
-        BarcodeFormat.EAN_8 -> "EAN-8 要 7 或 8 位數字（最後一位是檢查碼）"
-        BarcodeFormat.UPC_A -> "UPC-A 要 11 或 12 位數字（最後一位是檢查碼）"
-        BarcodeFormat.ITF -> "ITF 只能用數字，而且要偶數位"
-        BarcodeFormat.CODE_39 -> "Code 39 只能用數字、大寫英文和 - . \$ / + %"
-        BarcodeFormat.CODABAR -> "Codabar 只能用數字和 - \$ : / . +（頭尾可以加 A～D）"
-        BarcodeFormat.CODE_128 -> "Code 128 只能用英數字和半形符號，不能有中文"
-        else -> "內容太長，放不進 QR Code"
+        BarcodeFormat.EAN_13 -> L.t("EAN-13 要 12 或 13 位數字（最後一位是檢查碼）", "EAN-13 needs 12 or 13 digits (the last one is a check digit)")
+        BarcodeFormat.EAN_8 -> L.t("EAN-8 要 7 或 8 位數字（最後一位是檢查碼）", "EAN-8 needs 7 or 8 digits (the last one is a check digit)")
+        BarcodeFormat.UPC_A -> L.t("UPC-A 要 11 或 12 位數字（最後一位是檢查碼）", "UPC-A needs 11 or 12 digits (the last one is a check digit)")
+        BarcodeFormat.ITF -> L.t("ITF 只能用數字，而且要偶數位", "ITF takes digits only, and an even number of them")
+        BarcodeFormat.CODE_39 -> L.t("Code 39 只能用數字、大寫英文和 - . \$ / + %", "Code 39 takes digits, capital letters and - . \$ / + % only")
+        BarcodeFormat.CODABAR -> L.t("Codabar 只能用數字和 - \$ : / . +（頭尾可以加 A～D）", "Codabar takes digits and - \$ : / . + only (A–D allowed at both ends)")
+        BarcodeFormat.CODE_128 -> L.t("Code 128 只能用英數字和半形符號，不能有中文", "Code 128 takes letters, digits and ASCII symbols only")
+        else -> L.t("內容太長，放不進 QR Code", "Too long to fit in a QR Code")
     }
 
     /**
@@ -87,8 +87,8 @@ object Barcode {
      * 一維條碼的矩陣高度是 1，畫的時候再拉高。
      */
     fun encode(v: String, format: BarcodeFormat): BitMatrix {
-        require(v.isNotEmpty()) { "請輸入號碼" }
-        require(v.length <= if (format == BarcodeFormat.QR_CODE) 500 else 80) { "號碼太長" }
+        require(v.isNotEmpty()) { L.t("請輸入號碼", "Enter the number") }
+        require(v.length <= if (format == BarcodeFormat.QR_CODE) 500 else 80) { L.t("號碼太長", "The number is too long") }
         // Code 39 遇到小寫或其他字，ZXing 會自動改成延伸模式，一般收銀掃描器讀不懂，所以先擋下來
         require(format != BarcodeFormat.CODE_39 || v.all { it in CODE39_CHARS }) { rule(format) }
         val hints = mutableMapOf<EncodeHintType, Any>()

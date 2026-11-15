@@ -80,7 +80,7 @@
                 android:layout_height="@dimen/touch_sm"
                 android:layout_gravity="end|center_vertical"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:contentDescription="調到最亮"
+                android:contentDescription="@string/brighten"
                 android:scaleType="center"
                 android:src="@drawable/ic_sun"
                 android:visibility="gone" />
@@ -93,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="點這裡選擇要顯示的條碼"
+        android:text="@string/widget_pick_single"
         android:textColor="@color/secondary"
         android:textSize="@dimen/text_body_sm" />
 </FrameLayout>

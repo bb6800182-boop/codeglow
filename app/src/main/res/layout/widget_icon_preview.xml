@@ -11,7 +11,7 @@
         android:background="@drawable/preview_icon"
         android:backgroundTint="@color/icon_1"
         android:gravity="center"
-        android:text="超"
+        android:text="@string/pv_a"
         android:textColor="@color/on_accent"
         android:textSize="@dimen/text_h3"
         android:textStyle="bold" />

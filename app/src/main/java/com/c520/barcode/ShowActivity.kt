@@ -65,8 +65,8 @@ class ShowActivity : Activity() {
             addView(gap(R.dimen.space_md))
             addView(label, lp(WRAP_CONTENT))
             addView(gap(R.dimen.space_xl))
-            addView(text("點一下關閉", R.dimen.text_caption, R.color.secondary))
-            contentDescription = "${k.name} 條碼，號碼 ${k.value}。點一下關閉"
+            addView(text(L.t("點一下關閉", "Tap to close"), R.dimen.text_caption, R.color.secondary))
+            contentDescription = L.t("${k.name} 條碼，號碼 ${k.value}。點一下關閉", "${k.name} barcode, number ${k.value}. Tap to close")
             setOnClickListener { finish() }
         }
     }

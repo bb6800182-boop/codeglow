@@ -36,7 +36,7 @@ class EditActivity : Activity() {
     companion object {
         private const val EXTRA_ID = "id"
         private const val REQ_IMAGE = 1
-        private const val CARRIER_NAME = "發票載具"
+        private val CARRIER_NAME get() = L.t("發票載具", "E-invoice carrier")
         private const val MAX_NAME = 20
         fun intent(c: Context, id: Long): Intent = Intent(c, EditActivity::class.java).putExtra(EXTRA_ID, id)
     }
@@ -101,14 +101,14 @@ class EditActivity : Activity() {
             valueIn.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD or InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
             valueIn.filters = arrayOf(InputFilter.AllCaps(), InputFilter.LengthFilter(8))
             valueIn.hint = "/ABC1234"
-            valueHint.text = "手機條碼共 8 碼，第 1 碼是「/」"
+            valueHint.text = L.t("手機條碼共 8 碼，第 1 碼是「/」", "Taiwan e-invoice mobile barcode: 8 characters, starting with \"/\"")
             if (nameIn.text.isBlank()) nameIn.setText(CARRIER_NAME)
         } else {
             // 不要選字建議、不要自動更正（號碼不是文字）
             valueIn.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             valueIn.filters = arrayOf(InputFilter.LengthFilter(500))
-            valueIn.hint = "卡片條碼下面的號碼"
-            valueHint.text = "格式會依號碼自動判斷；店家掃不到再換一種試試"
+            valueIn.hint = L.t("卡片條碼下面的號碼", "The number under the barcode on your card")
+            valueHint.text = L.t("格式會依號碼自動判斷；店家掃不到再換一種試試", "The format is picked from the number. If the store can't scan it, try another one")
             if (nameIn.text.toString() == CARRIER_NAME) nameIn.setText("")
         }
     }
@@ -162,8 +162,8 @@ class EditActivity : Activity() {
     private fun refresh(): String? {
         val (v, f) = current()
         var err: String? = when {
-            v.isEmpty() -> "請輸入號碼"
-            kind == Card.CARRIER && !Barcode.isCarrier(v) -> "手機條碼要 8 碼：第 1 碼是「/」，後 7 碼是數字、大寫英文或 + - ."
+            v.isEmpty() -> L.t("請輸入號碼", "Enter the number")
+            kind == Card.CARRIER && !Barcode.isCarrier(v) -> L.t("手機條碼要 8 碼：第 1 碼是「/」，後 7 碼是數字、大寫英文或 + - .", "The mobile barcode has 8 characters: \"/\" first, then 7 digits, capital letters or + - .")
             else -> null
         }
         if (err == null) {
@@ -198,7 +198,7 @@ class EditActivity : Activity() {
         val name = nameIn.text.toString().trim()
         val err = refresh()
         if (name.isEmpty()) {
-            showError("請輸入名稱")
+            showError(L.t("請輸入名稱", "Enter a name"))
             nameIn.requestFocus()
             return
         }
@@ -213,7 +213,7 @@ class EditActivity : Activity() {
         val picked = newIcon
         if (picked != null) {
             if (Icons.save(this, id, picked)) icon = true
-            else Toast.makeText(this, "圖示存不起來，先用文字圖示", Toast.LENGTH_LONG).show()
+            else Toast.makeText(this, L.t("圖示存不起來，先用文字圖示", "Couldn't save the icon. Using a letter icon for now"), Toast.LENGTH_LONG).show()
         }
         if (!icon) Store.iconFile(this, id).delete()
         Store.put(this, Card(id, name.take(MAX_NAME), kind, v, f.name, icon))
@@ -222,12 +222,12 @@ class EditActivity : Activity() {
     }
 
     private fun confirmDelete() {
-        val name = nameIn.text.toString().trim().ifEmpty { "這張條碼" }
+        val name = nameIn.text.toString().trim().ifEmpty { L.t("這張條碼", "this barcode") }
         val d = AlertDialog.Builder(this)
-            .setTitle("刪除「$name」？")
-            .setMessage("小工具上的這張條碼也會一起移除。")
-            .setNegativeButton("取消", null)
-            .setPositiveButton("刪除") { _, _ ->
+            .setTitle(L.t("刪除「$name」？", "Delete \"$name\"?"))
+            .setMessage(L.t("小工具上的這張條碼也會一起移除。", "It will be removed from your widgets too."))
+            .setNegativeButton(L.t("取消", "Cancel"), null)
+            .setPositiveButton(L.t("刪除", "Delete")) { _, _ ->
                 Store.delete(this, cardId)
                 Widgets.refreshAll(this)
                 finish()
@@ -246,7 +246,7 @@ class EditActivity : Activity() {
         try {
             startActivityForResult(i, REQ_IMAGE)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "找不到可以選圖片的 App", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, L.t("找不到可以選圖片的 App", "No app found to pick an image"), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -256,7 +256,7 @@ class EditActivity : Activity() {
         val uri = data?.data ?: return
         val b = Icons.fromUri(this, uri)
         if (b == null) {
-            Toast.makeText(this, "這張圖片讀不到，換一張試試", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, L.t("這張圖片讀不到，換一張試試", "Can't read this image. Try another one"), Toast.LENGTH_LONG).show()
             return
         }
         newIcon = b
@@ -278,31 +278,31 @@ class EditActivity : Activity() {
             val p = px(R.dimen.space_lg)
             setPadding(p, p, p, p)
         }
-        root.addView(text(if (editing) "編輯條碼" else "新增條碼", R.dimen.text_h3, bold = true).apply { isAccessibilityHeading = true })
+        root.addView(text(if (editing) L.t("編輯條碼", "Edit barcode") else L.t("新增條碼", "Add barcode"), R.dimen.text_h3, bold = true).apply { isAccessibilityHeading = true })
         root.addView(gap(R.dimen.space_lg))
 
-        carrierBtn = radio("發票載具")
-        memberBtn = radio("會員卡")
+        carrierBtn = radio(L.t("發票載具", "Taiwan e-invoice"))
+        memberBtn = radio(L.t("會員卡", "Membership card"))
         kindGroup = RadioGroup(this).apply {
             id = View.generateViewId()
             orientation = RadioGroup.HORIZONTAL
             addView(carrierBtn)
             addView(memberBtn, RadioGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply { marginStart = px(R.dimen.space_lg) })
         }
-        root.addView(label("類型", kindGroup))
+        root.addView(label(L.t("類型", "Type"), kindGroup))
         root.addView(kindGroup)
         root.addView(gap(R.dimen.space_md))
 
-        nameIn = input("例如：全聯、家樂福").apply {
+        nameIn = input(L.t("例如：全聯、家樂福", "e.g. the store name")).apply {
             inputType = InputType.TYPE_CLASS_TEXT
             filters = arrayOf(InputFilter.LengthFilter(MAX_NAME))
         }
-        root.addView(label("名稱", nameIn))
+        root.addView(label(L.t("名稱", "Name"), nameIn))
         root.addView(nameIn, lp())
         root.addView(gap(R.dimen.space_md))
 
         valueIn = input("")
-        root.addView(label("號碼", valueIn))
+        root.addView(label(L.t("號碼", "Number"), valueIn))
         root.addView(valueIn, lp())
         valueHint = text("", R.dimen.text_caption, R.color.secondary)
         root.addView(valueHint, lp().apply { topMargin = px(R.dimen.space_xs) })
@@ -317,24 +317,24 @@ class EditActivity : Activity() {
         }
         formatBox = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(label("格式", formatSpin))
+            addView(label(L.t("格式", "Format"), formatSpin))
             addView(formatSpin, lp(WRAP_CONTENT))
             addView(gap(R.dimen.space_md))
         }
         root.addView(formatBox, lp())
 
         iconView = ImageView(this).apply { importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO }
-        iconReset = button("改用文字") {
+        iconReset = button(L.t("改用文字", "Use a letter")) {
             newIcon = null
             iconRemoved = true
             renderIcon()
         }
-        root.addView(label("圖示"))
+        root.addView(label(L.t("圖示", "Icon")))
         root.addView(LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             addView(iconView, lp(px(R.dimen.icon), px(R.dimen.icon)))
-            addView(button("選擇圖片") { pickImage() }, lp(WRAP_CONTENT).apply { marginStart = px(R.dimen.space_md) })
+            addView(button(L.t("選擇圖片", "Choose image")) { pickImage() }, lp(WRAP_CONTENT).apply { marginStart = px(R.dimen.space_md) })
             addView(iconReset, lp(WRAP_CONTENT).apply { marginStart = px(R.dimen.space_sm) })
         })
         root.addView(gap(R.dimen.space_lg))
@@ -348,7 +348,7 @@ class EditActivity : Activity() {
         previewValue = text("", R.dimen.text_caption).mono()
         previewBox = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(label("預覽"))
+            addView(label(L.t("預覽", "Preview")))
             addView(card().apply {
                 gravity = Gravity.CENTER_HORIZONTAL
                 addView(previewImg, lp())
@@ -368,10 +368,10 @@ class EditActivity : Activity() {
         }
         root.addView(error, lp().apply { topMargin = px(R.dimen.space_md) })
         root.addView(gap(R.dimen.space_lg))
-        root.addView(button("儲存", Kind.PRIMARY) { save() }, lp())
+        root.addView(button(L.t("儲存", "Save"), Kind.PRIMARY) { save() }, lp())
         if (editing) {
             root.addView(gap(R.dimen.space_sm))
-            root.addView(button("刪除", Kind.DANGER) { confirmDelete() }, lp())
+            root.addView(button(L.t("刪除", "Delete"), Kind.DANGER) { confirmDelete() }, lp())
         }
         return ScrollView(this).apply {
             isFillViewport = true

@@ -29,13 +29,13 @@ class MainActivity : Activity() {
         list.removeAllViews()
         val cards = Store.all(this)
         if (cards.isEmpty()) {
-            list.addView(text("還沒有條碼。按「新增」加入發票載具或會員卡。", color = R.color.secondary))
+            list.addView(text(L.t("還沒有條碼。按「新增」加入發票載具或會員卡。", "No barcodes yet. Tap \"Add\" to add a membership card."), color = R.color.secondary))
             return
         }
         for (k in cards) {
-            val edit = button("編輯") { startActivity(EditActivity.intent(this, k.id)) }.apply { contentDescription = "編輯「${k.name}」" }
+            val edit = button(L.t("編輯", "Edit")) { startActivity(EditActivity.intent(this, k.id)) }.apply { contentDescription = L.t("編輯「${k.name}」", "Edit \"${k.name}\"") }
             list.addView(
-                cardRow(k, edit, "${k.name}，${k.value}，點一下全螢幕顯示條碼") { startActivity(ShowActivity.intent(this, k.id)) },
+                cardRow(k, edit, L.t("${k.name}，${k.value}，點一下全螢幕顯示條碼", "${k.name}, ${k.value}. Tap to show the barcode full screen")) { startActivity(ShowActivity.intent(this, k.id)) },
                 lp().apply { bottomMargin = px(R.dimen.space_sm) },
             )
         }
@@ -51,7 +51,7 @@ class MainActivity : Activity() {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
             addView(text(getString(R.string.app_name), R.dimen.text_h3, bold = true).apply { isAccessibilityHeading = true }, lp(0, WRAP_CONTENT, 1f))
-            addView(button("＋ 新增", Kind.PRIMARY) { startActivity(EditActivity.intent(this@MainActivity, 0)) }.apply { contentDescription = "新增條碼" })
+            addView(button(L.t("＋ 新增", "+ Add"), Kind.PRIMARY) { startActivity(EditActivity.intent(this@MainActivity, 0)) }.apply { contentDescription = L.t("新增條碼", "Add barcode") })
         })
         root.addView(gap(R.dimen.space_lg))
         perm = permissionCard()
@@ -59,18 +59,18 @@ class MainActivity : Activity() {
         list = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
         root.addView(list, lp())
         root.addView(gap(R.dimen.space_md))
-        root.addView(text("加到桌面：長按桌面空白處 →「小工具」→「碼上亮」，有「單一條碼」「多個店家」「單一圖示」三種。", R.dimen.text_body_sm, R.color.secondary))
+        root.addView(text(L.t("加到桌面：長按桌面空白處 →「小工具」→「碼上亮」，有「單一條碼」「多個店家」「單一圖示」三種。", "Add to your home screen: long-press an empty spot → \"Widgets\" → \"CodeGlow\". There are three: \"Single barcode\", \"Several stores\" and \"Single icon\"."), R.dimen.text_body_sm, R.color.secondary))
         // 關於：聯繫作者、更多軟體（只開寄信的 App 和瀏覽器，App 自己不連網）
         root.addView(gap(R.dimen.space_lg))
-        root.addView(text("關於", bold = true).apply { isAccessibilityHeading = true })
+        root.addView(text(L.t("關於", "About"), bold = true).apply { isAccessibilityHeading = true })
         root.addView(text("${getString(R.string.app_name)} ${About.version(this)}", R.dimen.text_body_sm, R.color.secondary))
         root.addView(gap(R.dimen.space_sm))
         root.addView(text(About.CONTACT_TEXT, R.dimen.text_body_sm, R.color.secondary))
         root.addView(text(About.MORE_TEXT, R.dimen.text_body_sm, R.color.secondary))
         root.addView(gap(R.dimen.space_sm))
         root.addView(LinearLayout(this).apply {
-            addView(button("寄信給作者") { About.mail(this@MainActivity, getString(R.string.app_name)) })
-            addView(button("更多軟體") { About.more(this@MainActivity) }, lp(WRAP_CONTENT, WRAP_CONTENT).apply { marginStart = px(R.dimen.space_sm) })
+            addView(button(L.t("寄信給作者", "Email the author")) { About.mail(this@MainActivity, getString(R.string.app_name)) })
+            addView(button(L.t("更多軟體", "More apps")) { About.more(this@MainActivity) }, lp(WRAP_CONTENT, WRAP_CONTENT).apply { marginStart = px(R.dimen.space_sm) })
         })
         return ScrollView(this).apply {
             isFillViewport = true

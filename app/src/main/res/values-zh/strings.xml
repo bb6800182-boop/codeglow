@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">碼上亮</string>
+    <string name="widget_single">單一條碼</string>
+    <string name="widget_single_desc">直接顯示一張條碼；點太陽調到最亮，點條碼恢復</string>
+    <string name="widget_grid">多個店家</string>
+    <string name="widget_grid_desc">店家圖示一覽；點圖示顯示條碼並調到最亮，點條碼恢復亮度、收回</string>
+    <string name="widget_icon">單一圖示</string>
+    <string name="widget_icon_desc">平常只有一個店家圖示（背景透明）；點圖示變白底顯示條碼並調到最亮，再點一下恢復</string>
+    <string name="need_permission">要先在「碼上亮」允許「修改系統設定」，小工具才能把螢幕調亮</string>
+    <string name="widget_empty">還沒有條碼，點這裡新增</string>
+    <string name="widget_pick">選擇條碼</string>
+    <string name="widget_pick_single">點這裡選擇要顯示的條碼</string>
+    <string name="brighten">調到最亮</string>
+    <string name="pv_a">超</string>
+    <string name="pv_a_name">超市</string>
+    <string name="pv_b">賣</string>
+    <string name="pv_b_name">賣場</string>
+    <string name="pv_c">載</string>
+    <string name="pv_c_name">發票載具</string>
+</resources>

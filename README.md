@@ -1,4 +1,6 @@
-# 碼上亮
+# 碼上亮 CodeGlow
+
+**English:** CodeGlow is an Android app for membership card barcodes. Tap a home-screen widget and the barcode shows at full brightness, then brightness returns to normal. English and Traditional Chinese UI (follows the phone language). Free, MIT, no network access. [Intro & download](https://c520.pages.dev/mashangliang/en/)
 
 放發票載具和會員卡條碼的 Android App。桌面小工具點一下，條碼就顯示並自動調到最亮，掃完恢復原本的亮度。免費、開源（MIT），不連網、沒有廣告。
 
@@ -15,6 +17,7 @@
 - App 裡點條碼會全螢幕顯示、調到最亮，而且不自動關螢幕。
 - 每張條碼可以選圖片當圖示；沒選就用名稱第一個字。
 - 資料只存在手機（不備份），App 沒有網路權限。
+- 介面有繁體中文和英文，跟著手機的語言（英文名稱 CodeGlow）。程式裡中英文寫在一起：`L.t("中文", "English")`；App 名稱和小工具的說明在 `res/values`（英文）和 `res/values-zh`（中文）。
 
 ## 權限
 

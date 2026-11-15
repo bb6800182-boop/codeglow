@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:background="@drawable/widget_bg"
             android:padding="@dimen/space_sm"
-            android:text="選擇條碼"
+            android:text="@string/widget_pick"
             android:textColor="@color/secondary"
             android:textSize="@dimen/text_caption" />
     </FrameLayout>

@@ -122,7 +122,7 @@ fun Context.cardRow(k: Card, trailing: View?, description: String, onClick: () -
     val info = LinearLayout(context).apply {
         orientation = LinearLayout.VERTICAL
         addView(text(k.name, bold = true).apply { maxLines = 1; ellipsize = TextUtils.TruncateAt.END })
-        addView(text("${if (k.carrier) "發票載具" else "會員卡"} · ${Barcode.label(k.format)}", R.dimen.text_caption, R.color.secondary))
+        addView(text("${if (k.carrier) L.t("發票載具", "Taiwan e-invoice") else L.t("會員卡", "Membership card")} · ${Barcode.label(k.format)}", R.dimen.text_caption, R.color.secondary))
         addView(text(k.value, R.dimen.text_body_sm).mono().apply { maxLines = 1; ellipsize = TextUtils.TruncateAt.END })
     }
     addView(info, lp(0, WRAP_CONTENT, 1f).apply { marginStart = p; marginEnd = px(R.dimen.space_sm) })
@@ -133,7 +133,7 @@ fun Context.cardRow(k: Card, trailing: View?, description: String, onClick: () -
 
 /** 還沒允許「修改系統設定」時的提示卡，按鈕打開設定頁。 */
 fun Activity.permissionCard() = card().apply {
-    addView(text("小工具要把螢幕調到最亮，需要允許「修改系統設定」。"))
+    addView(text(L.t("小工具要把螢幕調到最亮，需要允許「修改系統設定」。", "Widgets need \"Modify system settings\" to turn the screen up to full brightness.")))
     addView(gap(R.dimen.space_sm))
-    addView(button("前往允許") { Bright.openSettings(this@permissionCard) }, lp(WRAP_CONTENT))
+    addView(button(L.t("前往允許", "Allow")) { Bright.openSettings(this@permissionCard) }, lp(WRAP_CONTENT))
 }

@@ -11,6 +11,8 @@
 <meta property="og:description" content="發票載具和會員卡放在桌面，點一下就亮出來給店員掃。">
 <meta property="og:url" content="https://c520.pages.dev/mashangliang/">
 <meta property="og:image" content="https://c520.pages.dev/mashangliang/icon-512.png">
+<link rel="alternate" hreflang="zh-Hant" href="https://c520.pages.dev/mashangliang/">
+<link rel="alternate" hreflang="en" href="https://c520.pages.dev/mashangliang/en/">
 <link rel="canonical" href="https://c520.pages.dev/mashangliang/">
 <meta name="theme-color" content="#F9FAFB">
 <meta name="color-scheme" content="light">
@@ -71,6 +73,8 @@ a:focus-visible, summary:focus-visible, .btn:focus-visible { outline: 3px solid 
 .btn:hover { background: #374151; border-color: #374151; }
 .btn.ghost { background: var(--surface-1); color: var(--ink); border-color: var(--hairline-strong); }
 .btn.ghost:hover { background: var(--surface-2); }
+.lang { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; color: var(--ink-subtle); font-size: 14px; text-decoration: none; }
+.lang:hover { color: var(--ink); }
 .top .btn { min-height: 40px; padding: 0 16px; font-size: 14px; }
 
 /* 開場 */
@@ -158,7 +162,8 @@ details[open] summary .ic { transform: rotate(180deg); }
 <header class="wrap top">
   <a class="home" href="/" aria-label="回 C520 首頁">C520</a>
   <div class="brand"><img src="icon.svg" alt="" width="32" height="32"><span>碼上亮</span></div>
-  <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.2.1.apk">下載</a>
+  <a class="lang" href="en/" lang="en" hreflang="en">English</a>
+  <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.3.0.apk">下載</a>
 </header>
 
 <main id="main" class="wrap" tabindex="-1">
@@ -169,10 +174,10 @@ details[open] summary .ic { transform: rotate(180deg); }
       <h1>碼上亮</h1>
       <p class="lead">結帳時不用再翻 App 找條碼。<br>桌面點一下，條碼就亮出來給店員掃。</p>
       <div class="actions">
-        <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.2.1.apk"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>下載 APK</a>
+        <a class="btn" href="https://c520-dl.bb6800182.workers.dev/mashangliang/android" download="碼上亮-v0.3.0.apk"><svg class="ic" aria-hidden="true"><use href="#i-download"/></svg>下載 APK</a>
         <a class="btn ghost" href="https://github.com/bb6800182-boop/mashangliang" target="_blank" rel="noopener noreferrer"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg>原始碼<span class="sr-only">（GitHub，另開分頁）</span></a>
       </div>
-      <p class="meta">v0.2.1・約 2.5 MB・Android 12 以上<br>免費、MIT 開源・不連網、沒有廣告</p>
+      <p class="meta">v0.3.0・約 2.5 MB・Android 12 以上<br>免費、MIT 開源・不連網、沒有廣告</p>
     </div>
   </div>
 
@@ -232,6 +237,10 @@ details[open] summary .ic { transform: rotate(180deg); }
     <details id="faq-phone">
       <summary>支援哪些手機？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
       <div class="faq-a"><p>Android 12 以上。在 Pixel 7 Pro 上開發與測試；桌面小工具的大小和長按選單，每個品牌的桌面會有些不同。</p></div>
+    </details>
+    <details id="faq-lang">
+      <summary>App 有哪些語言？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>
+      <div class="faq-a"><p>繁體中文和英文，跟著手機的語言：手機是中文就顯示中文，其他語言顯示英文（英文名稱是 CodeGlow）。</p></div>
     </details>
     <details id="faq-install">
       <summary>安裝時跳出警告？<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></summary>

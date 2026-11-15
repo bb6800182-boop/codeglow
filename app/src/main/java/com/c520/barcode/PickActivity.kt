@@ -57,14 +57,14 @@ class PickActivity : Activity() {
         list.removeAllViews()
         val cards = Store.all(this)
         if (cards.isEmpty()) {
-            list.addView(text("還沒有條碼，先新增一張。", color = R.color.secondary))
+            list.addView(text(L.t("還沒有條碼，先新增一張。", "No barcodes yet. Add one first."), color = R.color.secondary))
             list.addView(gap(R.dimen.space_md))
-            list.addView(button("新增條碼", Kind.PRIMARY) { startActivity(EditActivity.intent(this, 0)) }, lp(WRAP_CONTENT))
+            list.addView(button(L.t("新增條碼", "Add barcode"), Kind.PRIMARY) { startActivity(EditActivity.intent(this, 0)) }, lp(WRAP_CONTENT))
             return
         }
         for (k in cards) {
             list.addView(
-                cardRow(k, null, "${k.name}，${k.value}，點一下放到小工具") { pick(k) },
+                cardRow(k, null, L.t("${k.name}，${k.value}，點一下放到小工具", "${k.name}, ${k.value}. Tap to put it on the widget")) { pick(k) },
                 lp().apply { bottomMargin = px(R.dimen.space_sm) },
             )
         }
@@ -83,12 +83,12 @@ class PickActivity : Activity() {
             val p = px(R.dimen.space_lg)
             setPadding(p, p, p, p)
         }
-        root.addView(text("選擇要放在小工具的條碼", R.dimen.text_h3, bold = true).apply { isAccessibilityHeading = true })
+        root.addView(text(L.t("選擇要放在小工具的條碼", "Choose the barcode for this widget"), R.dimen.text_h3, bold = true).apply { isAccessibilityHeading = true })
         root.addView(gap(R.dimen.space_xs))
         val hint = if (iconWidget) {
-            "平常只有圖示（背景透明）；點圖示變白底顯示條碼並調到最亮，再點一下恢復。"
+            L.t("平常只有圖示（背景透明）；點圖示變白底顯示條碼並調到最亮，再點一下恢復。", "Normally just an icon on a clear background. Tap it to show the barcode on white at full brightness; tap again to restore.")
         } else {
-            "點條碼右下的太陽調到最亮，最亮時點條碼恢復。"
+            L.t("點條碼右下的太陽調到最亮，最亮時點條碼恢復。", "Tap the sun at the lower right for full brightness; tap the barcode to restore.")
         }
         root.addView(text(hint, R.dimen.text_body_sm, R.color.secondary))
         root.addView(gap(R.dimen.space_lg))
@@ -111,7 +111,7 @@ class PickActivity : Activity() {
             id = View.generateViewId()
             orientation = RadioGroup.HORIZONTAL
         }
-        listOf("靠左", "置中", "靠右").forEachIndexed { i, s ->
+        listOf(L.t("靠左", "Left"), L.t("置中", "Center"), L.t("靠右", "Right")).forEachIndexed { i, s ->
             val b = radio(s)
             alignIds[i] = b.id
             group.addView(b, RadioGroup.LayoutParams(WRAP_CONTENT, WRAP_CONTENT).apply { if (i > 0) marginStart = px(R.dimen.space_lg) })
@@ -120,7 +120,7 @@ class PickActivity : Activity() {
         alignGroup = group
         return LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            addView(text("圖示位置", R.dimen.text_body_sm, R.color.secondary).apply { labelFor = group.id })
+            addView(text(L.t("圖示位置", "Icon position"), R.dimen.text_body_sm, R.color.secondary).apply { labelFor = group.id })
             addView(group)
         }
     }
