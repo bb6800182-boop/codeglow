@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 中文要放兩份、內容一樣：values-b+zh+Hant（台灣、香港的繁體手機）和 values-zh（其他中文）。只放 values-zh 的話，Android 會把它當簡體，台灣的手機反而顯示英文。 -->
 <resources>
     <string name="app_name">碼上亮</string>
     <string name="widget_single">單一條碼</string>
